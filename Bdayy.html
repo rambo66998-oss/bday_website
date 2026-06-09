@@ -1,1 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Gunnu 🎂</title>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Fredoka+One&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pink: #f48fb1;
+    --pink-light: #fce4ec;
+    --pink-deep: #e91e63;
+    --pink-soft: #f8bbd9;
+    --red-brown: #8B2500;
+    --cream: #fff9f0;
+    --heart-bg: #f8a5c2;
+  }
 
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--cream);
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+  }
+
+  /* SLIDE SYSTEM */
+  .slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.6s ease;
+  }
+  .slide.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  /* ===================== SLIDE 1: PIN ENTRY ===================== */
+  #slide-pin {
+    background: white;
+    flex-direction: row;
+    gap: 0;
+  }
+  .pin-left {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .pin-left img { width: 340px; max-width: 45vw; }
+  .pin-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+  }
+  .pin-display {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+  .pin-box {
+    width: 60px; height: 60px;
+    border: 3px solid #111;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px; font-family: 'Fredoka One', cursive;
+    color: var(--pink-deep);
+    transition: all 0.2s;
+  }
+  .pin-box.filled { background: var(--pink-light); }
+  .pin-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  .heart-btn {
+    width: 72px; height: 72px;
+    background: var(--heart-bg);
+    border: none;
+    cursor: pointer;
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    clip-path: url(#heart);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Fredoka One', cursive;
+    font-size: 22px;
+    color: var(--pink-deep);
+    position: relative;
+    transition: transform 0.15s, background 0.15s;
+  }
+  .heart-btn:hover { transform: scale(1.1); background: var(--pink); }
+  .heart-btn:active { transform: scale(0.95); }
+  /* Heart shape via CSS */
+  .heart-btn::before, .heart-btn::after {
+    content: '';
+    position: absolute;
+    background: inherit;
+    border-radius: 50%;
+  }
+  /* Using a simpler heart approach */
+  .heart-shape {
+    width: 72px; height: 65px;
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+  }
+  .heart-shape::before, .heart-shape::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 36px; height: 58px;
+    background: var(--heart-bg);
+    border-radius: 36px 36px 0 0;
+    transition: background 0.15s;
+  }
+  .heart-shape::before { left: 36px; transform: rotate(-45deg); transform-origin: 0 100%; }
+  .heart-shape::after { left: 0; transform: rotate(45deg); transform-origin: 100% 100%; }
+  .heart-shape:hover::before, .heart-shape:hover::after { background: var(--pink); }
+  .heart-shape span {
+    position: relative;
+    z-index: 2;
+    font-family: 'Fredoka One', cursive;
+    font-size: 22px;
+    color: var(--pink-deep);
+    margin-top: 18px;
+  }
+  .pin-error {
+    color: var(--pink-deep);
+    font-family: 'Caveat', cursive;
+    font-size: 18px;
+    height: 24px;
+  }
+
+  /* ===================== SLIDE 2: HAPPY BIRTHDAY SNOOPY ===================== */
+  #slide-hb {
+    background: white;
+    flex-direction: column;
+    gap: 0;
+  }
+  .hb-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    animation: popIn 0.7s ease;
+  }
+  @keyframes popIn {
+    0% { transform: scale(0.7); opacity: 0; }
+    70% { transform: scale(1.05); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  .hb-title {
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(48px, 8vw, 96px);
+    background: linear-gradient(135deg, #ff69b4, #ff1493, #ff69b4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: none;
+    filter: drop-shadow(2px 2px 0 #ffd6e7);
+    letter-spacing: 2px;
+    text-align: center;
+    line-height: 1.1;
+  }
+  .sparkle {
+    position: absolute;
+    font-size: 24px;
+    animation: sparkle 1s ease-in-out infinite alternate;
+  }
+  @keyframes sparkle { 0% { opacity: 0.4; transform: scale(0.8) rotate(-10deg); } 100% { opacity: 1; transform: scale(1.2) rotate(10deg); } }
+  .hb-snoopy { width: 280px; animation: bounce 1.2s ease infinite alternate; }
+  @keyframes bounce { 0% { transform: translateY(0); } 100% { transform: translateY(-12px); } }
+  @keyframes offerFlower {
+    0%   { transform: translateY(0px) rotate(-4deg); }
+    40%  { transform: translateY(-10px) rotate(2deg); }
+    70%  { transform: translateY(-16px) rotate(5deg); }
+    100% { transform: translateY(-8px) rotate(0deg); }
+  }
+  .next-btn {
+    background: var(--pink-soft);
+    border: none;
+    border-radius: 50px;
+    padding: 14px 36px;
+    font-family: 'Fredoka One', cursive;
+    font-size: 22px;
+    color: var(--pink-deep);
+    cursor: pointer;
+    transition: transform 0.2s, background 0.2s;
+    box-shadow: 0 4px 15px rgba(244,143,177,0.4);
+    margin-top: 10px;
+  }
+  .next-btn:hover { transform: scale(1.07); background: var(--pink); color: white; }
+
+  /* ===================== SLIDE 3: MAKE A WISH ===================== */
+  #slide-wish {
+    background: white;
+    flex-direction: column;
+    gap: 30px;
+  }
+  .wish-title {
+    font-family: 'Caveat', cursive;
+    font-size: clamp(36px, 6vw, 72px);
+    color: var(--red-brown);
+    text-align: center;
+  }
+  .cake-wrap { position: relative; display: flex; flex-direction: column; align-items: center; }
+  .cake-img { width: min(420px, 80vw); }
+  .blow-btn {
+    position: absolute;
+    bottom: 10px;
+    background: var(--pink-soft);
+    border: none;
+    border-radius: 16px;
+    padding: 12px 30px;
+    font-family: 'Fredoka One', cursive;
+    font-size: 22px;
+    color: var(--pink-deep);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .blow-btn:hover { background: var(--pink-deep); color: white; transform: scale(1.05); }
+  .candles-out { display: none; }
+
+  /* ===================== SLIDE 4: NAME REVEAL ===================== */
+  #slide-name {
+    background: white;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .name-title {
+    font-family: 'Caveat', cursive;
+    font-size: clamp(32px, 6vw, 72px);
+    color: var(--red-brown);
+    text-align: center;
+    animation: fadeSlideUp 0.8s ease;
+  }
+  .name-cake { width: min(500px, 85vw); animation: fadeSlideUp 0.8s ease 0.2s both; }
+  @keyframes fadeSlideUp {
+    0% { opacity: 0; transform: translateY(30px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ===================== SLIDE 5: CHOOSE ===================== */
+  #slide-choose {
+    background: white;
+    flex-direction: column;
+    gap: 30px;
+    padding: 30px;
+  }
+  .choose-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .choose-title {
+    font-family: 'Caveat', cursive;
+    font-size: clamp(28px, 5vw, 58px);
+    color: var(--red-brown);
+    text-align: center;
+  }
+  .choose-sub {
+    font-family: 'Caveat', cursive;
+    font-size: clamp(22px, 3.5vw, 40px);
+    color: var(--pink-deep);
+    text-align: center;
+  }
+  .choose-items {
+    display: flex;
+    gap: 40px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .choose-item {
+    cursor: pointer;
+    transition: transform 0.25s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .choose-item:hover { transform: scale(1.12) rotate(-2deg); }
+  .choose-item img { width: clamp(100px, 15vw, 160px); }
+  .snoopy-corner { width: 80px; }
+
+  /* ===================== SLIDE 6: CAMERA / PIC ===================== */
+  #slide-camera {
+    background: white;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    justify-content: center;
+  }
+  .cam-title {
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(24px, 4vw, 52px);
+    color: var(--red-brown);
+    text-align: center;
+  }
+  .camera-wrap {
+    position: relative;
+    width: min(340px, 80vw);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .camera-img { width: 100%; }
+  .polaroid {
+    position: absolute;
+    top: -60px;
+    width: 62%;
+    background: white;
+    padding: 8px 8px 30px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.18);
+    transform: rotate(3deg);
+    animation: slideOut 0.5s ease;
+  }
+  .polaroid img { width: 100%; display: block; }
+  @keyframes slideOut {
+    0% { top: 0; opacity: 0; }
+    100% { top: -60px; opacity: 1; }
+  }
+  .cam-caption {
+    font-family: 'Caveat', cursive;
+    font-size: clamp(18px, 3vw, 36px);
+    color: var(--red-brown);
+    font-weight: 700;
+    text-align: center;
+  }
+
+  /* ===================== SLIDE 7: LOVE NOTE ===================== */
+  #slide-note {
+    background: white;
+    flex-direction: row;
+    gap: 30px;
+    padding: 40px;
+    flex-wrap: wrap;
+  }
+  .note-photos {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+  }
+  .stamp-photo {
+    border: 6px solid var(--red-brown);
+    padding: 0;
+    width: clamp(120px, 18vw, 200px);
+    aspect-ratio: 3/4;
+    object-fit: cover;
+    border-radius: 4px;
+    box-shadow: 4px 4px 12px rgba(0,0,0,0.15);
+  }
+  .mirror-photo {
+    width: clamp(140px, 20vw, 220px);
+    border-radius: 8px;
+    box-shadow: 4px 4px 12px rgba(0,0,0,0.15);
+  }
+  .note-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    min-width: 280px;
+  }
+  .clipboard {
+    background: #f5f0e0;
+    border: 2px solid #c5b99a;
+    border-radius: 8px;
+    padding: 30px 24px 24px;
+    position: relative;
+    box-shadow: 4px 4px 12px rgba(0,0,0,0.12);
+    max-width: 380px;
+    background-image: repeating-linear-gradient(transparent, transparent 27px, #d0c9b0 28px);
+    line-height: 28px;
+  }
+  .clipboard::before {
+    content: '';
+    position: absolute;
+    top: -18px; left: 50%; transform: translateX(-50%);
+    width: 60px; height: 36px;
+    background: #c9a84c;
+    border-radius: 8px 8px 4px 4px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  }
+  .clipboard-text {
+    font-family: 'Nunito', sans-serif;
+    font-size: clamp(13px, 1.8vw, 18px);
+    color: #333;
+    text-align: center;
+    line-height: 28px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+  .flower-accent {
+    font-size: 32px;
+    position: absolute;
+    top: -20px; right: -20px;
+  }
+
+  /* ===================== SLIDE 8: SONG ===================== */
+  #slide-song {
+    background: #1a3a3a;
+    flex-direction: column;
+    gap: 30px;
+    align-items: center;
+    justify-content: center;
+  }
+  .song-embed {
+    width: min(700px, 90vw);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+  }
+  .song-embed iframe { display: block; }
+  .song-caption {
+    font-family: 'Caveat', cursive;
+    font-size: 28px;
+    color: white;
+    opacity: 0.8;
+    letter-spacing: 1px;
+  }
+
+  /* CONFETTI */
+  .confetti-piece {
+    position: fixed;
+    width: 10px; height: 14px;
+    top: -20px;
+    animation: confettiFall linear forwards;
+    border-radius: 2px;
+    pointer-events: none;
+    z-index: 999;
+  }
+  @keyframes confettiFall {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+  }
+
+  /* HEARTS FLOAT */
+  .floating-heart {
+    position: fixed;
+    font-size: 20px;
+    animation: floatUp 2.5s ease forwards;
+    pointer-events: none;
+    z-index: 999;
+  }
+  @keyframes floatUp {
+    0% { opacity: 1; transform: translateY(0) scale(1); }
+    100% { opacity: 0; transform: translateY(-200px) scale(1.5); }
+  }
+</style>
+</head>
+<body>
+
+<!-- =========== SLIDE 1: PIN =========== -->
+<div class="slide active" id="slide-pin">
+  <div class="pin-left">
+    <img src="data:image/png;base64,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
